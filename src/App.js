@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import React from 'react';
 import './App.css';
 
 function App() {
+
+  const [activity, setActivity] = useState('');
+  const [participants, setParticipants] = useState("1");
+  const [type, setType] = useState("");
+
+  const getNewActivity = async() => {
+    const response = await fetch(`http://www.boredapi.com/api/activity `);
+    const data = await response.json();
+    setActivity(data.activity);
+    setParticipants(data.participants);
+    setType(data.type);
+  }
+
+  const showNext = () => {
+    setActivity(data.activity);
+  };
+
+  useEffect(() => {
+    getNewActivity();
+  }, []);
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <p>
+        <i>Type of activity :</i> <span className="type span"> {type} </span>
+      </p>
+      <h2 className="type">{activity}</h2>
+      <p>
+        <i>
+          {" "}
+          {participants === 1
+            ? "for " + participants + " person"
+            : "for " + participants + " people"}
+        </i>
+      </p>
+
+      <button onClick={getNewActivity}>Show me next!</button>
     </div>
   );
 }
