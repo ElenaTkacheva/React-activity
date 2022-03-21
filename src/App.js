@@ -16,9 +16,7 @@ function App() {
     setType(data.type);
   }
 
-  const showNext = () => {
-    setActivity(data.activity);
-  };
+
 
   useEffect(() => {
     getNewActivity();
